@@ -67,77 +67,142 @@ function App() {
   }
 
 
-return (
-  <>
-    {/* header */}
-    <header className="app-header">
-      <h1>Mini Pokédex</h1>
-    </header>
+  return (
+    <>
+      {/* header */}
+      <header className="app-header">
+        <h1>Mini Pokédex</h1>
+      </header>
+  
+      <div className="container">
+        {/* left container */}
+        
+        <div className="container">
+        <div className="left-container">
+          {pokemonData ? (
+            <>
+              <img src={pokemonData.sprites.front_default} alt={pokemonData.name}/>
+              {/* <p>ID: {pokemonData.id}</p> */}
+{/* 
+              <h3 className="types-label">Types:</h3>
+  
+              <div className="type-container">
+                {pokemonData.types.map((typeSlot) => {
+                  const typeName = typeSlot.type.name;
+                  const typeColor = typeColors[typeName] || '#000'; // Fallback color
+  
+                  return (
+                    <span
+                      key={typeName}
+                      className="type-badge"
+                      style={{ backgroundColor: typeColor }}
+                    >
+                      {typeName}
+                    </span>
+                    
+                  );
+                })}
+              </div> */}
+            </>
+          ) : (
+            <p>Loading...</p>
+          )}
+          {/* buttons */}
+          {/* <div className="arrow-container">
+            <button onClick={decrementId} disabled={pokemonId <= 1}>←</button>
+            <button onClick={incrementId}>→</button>
+          </div> */}
+        </div>
+        </div>
 
-    <div className="container">
-      {/* left container */}
-      <div className="left-container">
-        {pokemonData ? (
-          <>
-            <h2>{pokemonData.name}</h2>
-            <img src={pokemonData.sprites.front_default} alt={pokemonData.name} />
-            <p>ID: {pokemonData.id}</p>
 
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
-        {/* buttons */}
-        <div className="button-container">
-          <button onClick={decrementId} disabled={pokemonId <= 1}>←</button>
-          <button onClick={incrementId}>→</button>
+        {/* right container */}
+        <div className="right-container">
+          {/* <div className="button-container">
+            <button 
+              onClick={() => handlePanelSwitch('info')}
+              style={{ backgroundColor: activePanel === 'info' ? '#7bff79' : '#e8e8e8' }}
+            >
+              Info
+            </button>
+            <button 
+              onClick={() => handlePanelSwitch('moves')}
+              style={{ backgroundColor: activePanel === 'moves' ? '#7bff79' : '#e8e8e8' }} 
+            >
+              Moves
+            </button>
+          </div> */}
+          {/* stats */}
+          <div className="stats-panel">
+            {activePanel === 'info' && pokemonData && (
+              <div>
+                  <p>height: {heightInMeters} m</p>
+                  <p>weight: {pokemonData.weight / 10} kg</p>
+                  <p>hp: {stats.find(stat => stat.stat.name === 'hp')?.base_stat}</p>
+                  <p>attack: {stats.find(stat => stat.stat.name === 'attack')?.base_stat}</p>
+                  <p>defense: {stats.find(stat => stat.stat.name === 'defense')?.base_stat}</p>
+                  <p>special attack: {stats.find(stat => stat.stat.name === 'special-attack')?.base_stat}</p>
+                  <p>special defense: {stats.find(stat => stat.stat.name === 'special-defense')?.base_stat}</p>
+                  <p>speed: {stats.find(stat => stat.stat.name === 'speed')?.base_stat}</p>
+              </div>
+            )}
+            {activePanel === 'moves' && pokemonData && (
+              <div>
+                {pokemonData.moves.map((move) => (
+                  <p key={move.move.name}>{move.move.name}</p>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* right container */}
-      <div className="right-container">
-        <div className="button-container">
-          <button 
-            onClick={() => handlePanelSwitch('info')}
-            style={{ backgroundColor: activePanel === 'info' ? 'green' : 'gray' }}
-          >
-            Info
-          </button>
-          <button 
-            onClick={() => handlePanelSwitch('moves')}
-            style={{ backgroundColor: activePanel === 'moves' ? 'green' : 'gray' }} 
-          >
-            Moves
-          </button>
+      <div className="name-container">
+        {pokemonData && <h2>{pokemonData.name}</h2>}
         </div>
-        {/* stats */}
-        <div className="stats-panel">
-          {activePanel === 'info' && pokemonData && (
-            <div>
-                <p>height: {heightInMeters} m</p>
-                <p>weight: {pokemonData.weight / 10} kg</p>
-                <p>hp: {stats.find(stat => stat.stat.name === 'hp')?.base_stat}</p>
-                <p>attack: {stats.find(stat => stat.stat.name === 'attack')?.base_stat}</p>
-                <p>defense: {stats.find(stat => stat.stat.name === 'defense')?.base_stat}</p>
-                <p>special attack: {stats.find(stat => stat.stat.name === 'special-attack')?.base_stat}</p>
-                <p>special defense: {stats.find(stat => stat.stat.name === 'special-defense')?.base_stat}</p>
-                <p>speed: {stats.find(stat => stat.stat.name === 'speed')?.base_stat}</p>
-            </div>
-          )}
-          {activePanel === 'moves' && pokemonData && (
-            <div>
-              {pokemonData.moves.map((move) => (
-                <p key={move.move.name}>{move.move.name}</p>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  </>
-);
+
+        <h3 className="types-label">Types:</h3>
+  
+  <div className="type-container">
+    {pokemonData.types.map((typeSlot) => {
+      const typeName = typeSlot.type.name;
+      const typeColor = typeColors[typeName] || '#000';
+
+      return (
+        <span
+          key={typeName}
+          className="type-badge"
+          style={{ backgroundColor: typeColor }}
+        >
+          {typeName}
+        </span>
+        
+      );
+    })}
+  </div>
+
+        <div className="arrow-container">
+            <button onClick={decrementId} disabled={pokemonId <= 1}>←</button>
+            <button onClick={incrementId}>→</button>
+          </div>
+
+          <div className="button-container">
+            <button 
+              onClick={() => handlePanelSwitch('info')}
+              style={{ backgroundColor: activePanel === 'info' ? '#7bff79' : '#e8e8e8' }}
+            >
+              Info
+            </button>
+            <button 
+              onClick={() => handlePanelSwitch('moves')}
+              style={{ backgroundColor: activePanel === 'moves' ? '#7bff79' : '#e8e8e8' }} 
+            >
+              Moves
+            </button>
+          </div>
+  
+    </>
+  );
 }
-
-
 
 export default App;
