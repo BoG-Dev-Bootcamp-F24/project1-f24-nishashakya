@@ -69,8 +69,7 @@ function App() {
           {pokemonData ? (
             <>
               <img src={pokemonData.sprites.front_default} alt={pokemonData.name}/>
-              <p>ID: {pokemonData.id}</p>
-              <h3 className="types-label">Types:</h3>
+              <h4 className="types-label">Types:</h4>
               <div className="type-container">
                 {pokemonData.types.map((typeSlot) => {
                   const typeName = typeSlot.type.name;
@@ -85,7 +84,7 @@ function App() {
                     </span>
                   );
                 })}
-              </div>
+              </div> 
             </>
           ) : (
             <p>Loading...</p>
@@ -97,7 +96,9 @@ function App() {
         </div>
 
         <div className="right-container">
-          <div className="button-container">
+        <h2>{activePanel.charAt(0).toUpperCase() + activePanel.slice(1)}</h2>
+
+          {/* <div className="button-container">
             <button 
               onClick={() => handlePanelSwitch('info')}
               style={{ backgroundColor: activePanel === 'info' ? '#7bff79' : '#e8e8e8' }}
@@ -110,12 +111,12 @@ function App() {
             >
               Moves
             </button>
-          </div>
+          </div> */}
           <div className="stats-panel">
             {activePanel === 'info' && pokemonData && (
               <div>
-                <p>height: {heightInMeters} m</p>
-                <p>weight: {pokemonData.weight / 10} kg</p>
+                <p>height: {heightInMeters}m</p>
+                <p>weight: {(pokemonData.weight / 10).toFixed(1)}kg</p>
                 <p>hp: {stats.find(stat => stat.stat.name === 'hp')?.base_stat}</p>
                 <p>attack: {stats.find(stat => stat.stat.name === 'attack')?.base_stat}</p>
                 <p>defense: {stats.find(stat => stat.stat.name === 'defense')?.base_stat}</p>
@@ -135,9 +136,25 @@ function App() {
         </div>
       </div>
 
+      <div className="button-container">
+            <button 
+              onClick={() => handlePanelSwitch('info')}
+              style={{ backgroundColor: activePanel === 'info' ? '#7bff79' : '#e8e8e8' }}
+            >
+              Info
+            </button>
+            <button 
+              onClick={() => handlePanelSwitch('moves')}
+              style={{ backgroundColor: activePanel === 'moves' ? '#7bff79' : '#e8e8e8' }} 
+            >
+              Moves
+            </button>
+          </div>
+
       <div className="name-container">
         {pokemonData && <h2>{pokemonData.name}</h2>}
       </div>
+
     </>
   );
 }
