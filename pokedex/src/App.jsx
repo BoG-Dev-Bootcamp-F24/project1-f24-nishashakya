@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
 
 function App() {
-
   const [pokemonId, setPokemonId] = useState(1); 
   const [pokemonData, setPokemonData] = useState(null);
   const [activePanel, setActivePanel] = useState('info');
-
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -24,15 +20,12 @@ function App() {
       }
     };
 
-    if (pokemonId > 0) {
-      fetchPokemonData();
-    }
+    fetchPokemonData(); 
   }, [pokemonId]); 
 
   const incrementId = () => {
     setPokemonId((prevId) => prevId + 1);
   };
-
 
   const decrementId = () => {
     setPokemonId((prevId) => (prevId > 1 ? prevId - 1 : prevId));
@@ -40,7 +33,6 @@ function App() {
 
   const handlePanelSwitch = (panel) => {
     setActivePanel(panel);
-
   };
 
   const heightInMeters = pokemonData ? (pokemonData.height / 10).toFixed(1) : '';
@@ -66,31 +58,23 @@ function App() {
     fairy: '#D685AD',
   }
 
-
   return (
     <>
-      {/* header */}
       <header className="app-header">
         <h1>Mini Pokédex</h1>
       </header>
   
       <div className="container">
-        {/* left container */}
-        
-        <div className="container">
         <div className="left-container">
           {pokemonData ? (
             <>
               <img src={pokemonData.sprites.front_default} alt={pokemonData.name}/>
-              {/* <p>ID: {pokemonData.id}</p> */}
-{/* 
+              <p>ID: {pokemonData.id}</p>
               <h3 className="types-label">Types:</h3>
-  
               <div className="type-container">
                 {pokemonData.types.map((typeSlot) => {
                   const typeName = typeSlot.type.name;
-                  const typeColor = typeColors[typeName] || '#000'; // Fallback color
-  
+                  const typeColor = typeColors[typeName] || '#000';
                   return (
                     <span
                       key={typeName}
@@ -99,26 +83,21 @@ function App() {
                     >
                       {typeName}
                     </span>
-                    
                   );
                 })}
-              </div> */}
+              </div>
             </>
           ) : (
             <p>Loading...</p>
           )}
-          {/* buttons */}
-          {/* <div className="arrow-container">
+          <div className="arrow-container">
             <button onClick={decrementId} disabled={pokemonId <= 1}>←</button>
             <button onClick={incrementId}>→</button>
-          </div> */}
-        </div>
+          </div>
         </div>
 
-
-        {/* right container */}
         <div className="right-container">
-          {/* <div className="button-container">
+          <div className="button-container">
             <button 
               onClick={() => handlePanelSwitch('info')}
               style={{ backgroundColor: activePanel === 'info' ? '#7bff79' : '#e8e8e8' }}
@@ -131,19 +110,18 @@ function App() {
             >
               Moves
             </button>
-          </div> */}
-          {/* stats */}
+          </div>
           <div className="stats-panel">
             {activePanel === 'info' && pokemonData && (
               <div>
-                  <p>height: {heightInMeters} m</p>
-                  <p>weight: {pokemonData.weight / 10} kg</p>
-                  <p>hp: {stats.find(stat => stat.stat.name === 'hp')?.base_stat}</p>
-                  <p>attack: {stats.find(stat => stat.stat.name === 'attack')?.base_stat}</p>
-                  <p>defense: {stats.find(stat => stat.stat.name === 'defense')?.base_stat}</p>
-                  <p>special attack: {stats.find(stat => stat.stat.name === 'special-attack')?.base_stat}</p>
-                  <p>special defense: {stats.find(stat => stat.stat.name === 'special-defense')?.base_stat}</p>
-                  <p>speed: {stats.find(stat => stat.stat.name === 'speed')?.base_stat}</p>
+                <p>height: {heightInMeters} m</p>
+                <p>weight: {pokemonData.weight / 10} kg</p>
+                <p>hp: {stats.find(stat => stat.stat.name === 'hp')?.base_stat}</p>
+                <p>attack: {stats.find(stat => stat.stat.name === 'attack')?.base_stat}</p>
+                <p>defense: {stats.find(stat => stat.stat.name === 'defense')?.base_stat}</p>
+                <p>special attack: {stats.find(stat => stat.stat.name === 'special-attack')?.base_stat}</p>
+                <p>special defense: {stats.find(stat => stat.stat.name === 'special-defense')?.base_stat}</p>
+                <p>speed: {stats.find(stat => stat.stat.name === 'speed')?.base_stat}</p>
               </div>
             )}
             {activePanel === 'moves' && pokemonData && (
@@ -159,48 +137,7 @@ function App() {
 
       <div className="name-container">
         {pokemonData && <h2>{pokemonData.name}</h2>}
-        </div>
-
-        <h3 className="types-label">Types:</h3>
-  
-  <div className="type-container">
-    {pokemonData.types.map((typeSlot) => {
-      const typeName = typeSlot.type.name;
-      const typeColor = typeColors[typeName] || '#000';
-
-      return (
-        <span
-          key={typeName}
-          className="type-badge"
-          style={{ backgroundColor: typeColor }}
-        >
-          {typeName}
-        </span>
-        
-      );
-    })}
-  </div>
-
-        <div className="arrow-container">
-            <button onClick={decrementId} disabled={pokemonId <= 1}>←</button>
-            <button onClick={incrementId}>→</button>
-          </div>
-
-          <div className="button-container">
-            <button 
-              onClick={() => handlePanelSwitch('info')}
-              style={{ backgroundColor: activePanel === 'info' ? '#7bff79' : '#e8e8e8' }}
-            >
-              Info
-            </button>
-            <button 
-              onClick={() => handlePanelSwitch('moves')}
-              style={{ backgroundColor: activePanel === 'moves' ? '#7bff79' : '#e8e8e8' }} 
-            >
-              Moves
-            </button>
-          </div>
-  
+      </div>
     </>
   );
 }
